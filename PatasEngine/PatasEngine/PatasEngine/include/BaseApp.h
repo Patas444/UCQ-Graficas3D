@@ -1,25 +1,28 @@
 #pragma once
-#include <SFML/Graphics.hpp>
+#include "Prerequisites.h"
+#include "Window.h"
+#include "ShapeFactory.h"
+#include "Actor.h"
 
 class
-BaseApp{
+	BaseApp {
 public:
 	BaseApp() = default;
 	~BaseApp() = default;
 
-	//Funcion que ejecuta la aplicación
+	// Funcion encargada de ejecutar la aplicacion en main
 	int
 	run();
 
-	void
+	// Funcion de inicializacion
+	bool
 	initialize();
 
-	void
-	handleEvents();
-
+	// Funcion que se actualiza por frame
 	void
 	update();
 
+	// Funcion de renderizado
 	void
 	render();
 
@@ -27,6 +30,10 @@ public:
 	cleanup();
 
 private:
-	sf::RenderWindow* window;
-	sf::CircleShape* shape;
+	sf::Clock clock;
+	sf::Time deltaTime;
+
+	Window* m_window;
+	EngineUtilities::TSharedPointer<Actor> Triangle;
+	EngineUtilities::TSharedPointer<Actor> Circle;
 };

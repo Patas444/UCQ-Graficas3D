@@ -16,7 +16,7 @@ Window::~Window() {
 }
 
 void
-Window::handlerEvents() {
+Window::handleEvents() {
 	sf::Event event;
 	while (m_window->pollEvent(event))
 	{
@@ -46,9 +46,9 @@ Window::display() {
 }
 
 bool
-Window::isOpen() const{
+Window::isOpen() const {
 	if (m_window != nullptr) {
-		m_window->isOpen();
+		return m_window->isOpen();
 	}
 	else {
 		ERROR("Window", "isOpen", "CHECK FOR WINDOW POINTER DATA");
@@ -56,18 +56,18 @@ Window::isOpen() const{
 	}
 }
 
-void 
-Window::draw(const sf::Drawable& drawable){
+void
+Window::draw(const sf::Drawable& drawable) {
 	if (m_window != nullptr) {
 		m_window->draw(drawable);
 	}
 	else {
-		ERROR("Window", "isOpen", "CHECK FOR WINDOW POINTER DATA");
+		ERROR("Window", "draw", "CHECK FOR WINDOW POINTER DATA");
 	}
 }
 
-sf::RenderWindow* 
-Window::getWindow(){
+sf::RenderWindow*
+Window::getWindow() {
 	if (m_window != nullptr) {
 		return m_window;
 	}
@@ -77,3 +77,7 @@ Window::getWindow(){
 	}
 }
 
+void
+Window::destroy() {
+	SAFE_PTR_RELEASE(m_window);
+}
