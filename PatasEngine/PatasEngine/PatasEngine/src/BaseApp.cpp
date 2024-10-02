@@ -49,10 +49,7 @@ BaseApp::update() {
 		static_cast<float>(mousePosition.y));
 
 	if (!Circle.isNull()) {
-		Circle->getComponent<ShapeFactory>()->Seek(mousePosF,
-			200.0f,
-			deltaTime.asSeconds(),
-			10.0f);
+		updateMovement(deltaTime.asSeconds(), Circle);
 	}
 }
 
@@ -68,4 +65,21 @@ void
 BaseApp::cleanup() {
 	m_window->destroy();
 	delete m_window;
+}
+
+void
+BaseApp::updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle) {
+	if (!circle || circle.isNull()) return;
+
+	sf::Vector2f targetPos = waypoints[currentWaypoint];
+
+	circle->getComponent<ShapeFactory>()->Seek(targetPos, 200.0f, deltaTime, 10.0f);
+
+	sf::Vector2f currentPos = circle->getComponent<ShapeFactory>()->getShape()->getPosition();
+
+	float distanceToTarget = std::sqrt(std::pow(targetPos.x - currentPos.x, 2) + std::pow(targetPos.y - currentPos.y, 2));
+
+	if (distanceToTarget < 10.0f) {
+		currentWaypoint = (currentWaypoint + 1) % waypoints.size();
+	}
 }

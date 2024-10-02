@@ -29,6 +29,9 @@ public:
 	void
 	cleanup();
 
+	void
+	updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle);
+
 private:
 	sf::Clock clock;
 	sf::Time deltaTime;
@@ -36,4 +39,14 @@ private:
 	Window* m_window;
 	EngineUtilities::TSharedPointer<Actor> Triangle;
 	EngineUtilities::TSharedPointer<Actor> Circle;
+
+	// Seek Activity
+	int currentWaypoint = 0;
+
+	std::vector<sf::Vector2f> waypoints = {
+		{100.0f, 100.0f},
+		{400.0f, 100.0f},
+		{400.0f, 400.0f},
+		{100.0f, 400.0f}
+	};
 };

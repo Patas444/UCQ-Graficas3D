@@ -19,16 +19,13 @@ namespace EngineUtilities {
         explicit TUniquePtr(T* rawPtr) : ptr(rawPtr) {}
 
         // Constructor de movimiento.
-        TUniquePtr(TUniquePtr<T>&& other) noexcept : ptr(other.ptr)
-        {
+        TUniquePtr(TUniquePtr<T>&& other) noexcept : ptr(other.ptr) {
             other.ptr = nullptr;
         }
 
         // Operador de asignación de movimiento.
-        TUniquePtr<T>& operator=(TUniquePtr<T>&& other) noexcept
-        {
-            if (this != &other)
-            {
+        TUniquePtr<T>& operator=(TUniquePtr<T>&& other) noexcept {
+            if (this != &other) {
                 // Liberar el objeto actual
                 delete ptr;
 
@@ -40,8 +37,7 @@ namespace EngineUtilities {
         }
 
         // Destructor.
-        ~TUniquePtr()
-        {
+        ~TUniquePtr() {
             delete ptr;
         }
 
@@ -59,23 +55,20 @@ namespace EngineUtilities {
         T* get() const { return ptr; }
 
         // Liberar la propiedad del puntero crudo.
-        T* release()
-        {
+        T* release() {
             T* oldPtr = ptr;
             ptr = nullptr;
             return oldPtr;
         }
 
         // Reiniciar el puntero gestionado.
-        void reset(T* rawPtr = nullptr)
-        {
+        void reset(T* rawPtr = nullptr) {
             delete ptr;
             ptr = rawPtr;
         }
 
         // Verificar si el puntero es nulo.
-        bool isNull() const
-        {
+        bool isNull() const {
             return ptr == nullptr;
         }
     private:
@@ -85,56 +78,7 @@ namespace EngineUtilities {
 
     // Función de utilidad para crear un TUniquePtr.
     template<typename T, typename... Args>
-    TUniquePtr<T> MakeUnique(Args... args)
-    {
+    TUniquePtr<T> MakeUnique(Args... args) {
         return TUniquePtr<T>(new T(args...));
     }
-
-    /*
-    // Ejemplo de uso de TUniquePtr
-    class MyClass
-    {
-    public:
-      MyClass(int value) : value(value)
-      {
-        std::cout << "MyClass constructor: " << value << std::endl;
-      }
-
-      ~MyClass()
-      {
-        std::cout << "MyClass destructor: " << value << std::endl;
-      }
-
-
-      void display() const
-      {
-        std::cout << "Value: " << value << std::endl;
-      }
-
-    private:
-      int value; ///< Valor del objeto MyClass.
-    };
-
-    int main()
-    {
-      {
-        TUniquePtr<MyClass> up1 = MakeUnique<MyClass>(10);
-        up1->display();
-
-        TUniquePtr<MyClass> up2 = MakeUnique<MyClass>(20);
-        up2->display();
-
-        // Transferencia de propiedad
-        up2 = std::move(up1);
-        up2->display();
-
-        // Liberar propiedad
-        MyClass* rawPtr = up2.release();
-        rawPtr->display();
-        delete rawPtr; // Manualmente liberar la memoria ya que fue liberada del TUniquePtr
-      } // Aquí, up1 y up2 se destruyen y la memoria de MyClass se libera automáticamente si no fue liberada antes
-
-      return 0;
-    }
-    */
 }
