@@ -44,9 +44,9 @@ private:
 	int currentWaypoint = 0;
 
 	std::vector<sf::Vector2f> waypoints = {
-		{100.0f, 100.0f},
-		{400.0f, 100.0f},
-		{400.0f, 400.0f},
-		{100.0f, 400.0f}
+	{100.0f, 100.0f},
+	{400.0f, 100.0f},
+	{400.0f, 400.0f},
+	{100.0f, 400.0f}
 	};
 };

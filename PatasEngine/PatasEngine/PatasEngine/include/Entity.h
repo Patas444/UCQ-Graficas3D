@@ -7,20 +7,21 @@ class Window;
 
 class
     Entity {
+
 public:
 
     //Destructor virtual.
 
     virtual
-        ~Entity() = default;
+    ~Entity() = default;
 
     //Método virtual puro para actualizar la entidad.
     virtual void
-        update(float deltaTime) = 0;
+    update(float deltaTime) = 0;
 
     //Método virtual puro para renderizar la entidad.
     virtual void
-        render(Window& window) = 0;
+    render(Window& window) = 0;
 
 
     //Agrega un componente a la entidad.
@@ -40,7 +41,7 @@ public:
         for (auto& component : components) {
             EngineUtilities::TSharedPointer<T> specificComponent = component.template dynamic_pointer_cast<T>();
             if (specificComponent) {
-                return specificComponent;
+            return specificComponent;
             }
         }
         return EngineUtilities::TSharedPointer<T>();

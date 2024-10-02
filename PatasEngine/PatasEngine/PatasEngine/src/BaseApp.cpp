@@ -1,7 +1,8 @@
 #include "BaseApp.h"
 
 int
-BaseApp::run() {
+BaseApp::
+run() {
 	if (!initialize()) {
 		ERROR("BaseApp", "run", "Initializes result on a false statemente, check method validations");
 	}

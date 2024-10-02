@@ -26,7 +26,7 @@ namespace EngineUtilities {
 		{
 			if (refCount && *refCount > 0)
 			{
-				return TSharedPointer<T>(ptr, refCount);
+			return TSharedPointer<T>(ptr, refCount);
 			}
 			return TSharedPointer<T>();
 		}
