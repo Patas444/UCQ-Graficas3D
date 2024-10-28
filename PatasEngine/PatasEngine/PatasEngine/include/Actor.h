@@ -1,53 +1,71 @@
-#pragma once
+ï»¿#pragma once
 #include "Prerequisites.h"
 #include "Entity.h"
 #include "ShapeFactory.h"
+#include "Transform.h"
 
 class
-Actor : Entity {
+    Actor : Entity {
 public:
-    //Constructor por defecto.
+    /**
+     * @brief Constructor por defecto.
+     */
     Actor() = default;
 
     Actor(std::string actorName);
 
-    
-    //Destructor virtual.
+    /**
+     * @brief Destructor virtual.
+     */
     virtual
-    ~Actor() = default;
+        ~Actor() = default;
 
-    //Actualiza el actor.
+    /**
+     * @brief Actualiza el actor.
+     * @param deltaTime El tiempo transcurrido desde la ï¿½ltima actualizaciï¿½n.
+     */
     void
-    update(float deltaTime) override;
+        update(float deltaTime) override;
 
-
-    //Renderiza el actor.
+    /**
+     * @brief Renderiza el actor.
+     * @param window Contexto del dispositivo para operaciones grï¿½ficas.
+     */
     void
-    render(Window& window) override;
+        render(Window& window) override;
 
-
-    //Destruye el actor y libera los recursos asociados.
+    /**
+     * @brief Destruye el actor y libera los recursos asociados.
+     */
     void
-    destroy();
+        destroy();
 
-    //Obtiene un componente específico del actor.
+    /**
+     * @brief Obtiene un componente especï¿½fico del actor.
+     * @tparam T Tipo del componente que se va a obtener.
+     * @return Puntero compartido al componente, o nullptr si no se encuentra.
+     */
     template <typename T>
     EngineUtilities::TSharedPointer<T>
-    getComponent();
+        getComponent();
 private:
-    // Nombre del actor.
-    std::string m_name = "Actor"; 
+    std::string m_name = "Actor"; ///< Nombre del actor.
 };
 
+/**
+ * El propï¿½sito de esta funciï¿½n es buscar y devolver un componente especï¿½fico de un actor,
+ * utilizando el tipo de componente especificado como argumento de la plantilla.
+ * Si el componente no se encuentra, la funciï¿½n devuelve nullptr.
+ */
 template<typename T>
 inline EngineUtilities::TSharedPointer<T>
 Actor::getComponent() {
     for (auto& component : components) {
         EngineUtilities::TSharedPointer<T> specificComponent = component.template dynamic_pointer_cast<T>();
         if (specificComponent) {
-        return specificComponent;
+            return specificComponent;
         }
     }
-    // Devuelve un TSharedPointer vacío si no se encuentra el componente
+    // Devuelve un TSharedPointer vacï¿½o si no se encuentra el componente
     return EngineUtilities::TSharedPointer<T>();
 }

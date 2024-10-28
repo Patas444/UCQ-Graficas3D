@@ -1,14 +1,14 @@
 #include "BaseApp.h"
 
 int
-BaseApp::
-run() {
+BaseApp::run() {
 	if (!initialize()) {
 		ERROR("BaseApp", "run", "Initializes result on a false statemente, check method validations");
 	}
+	m_GUI.init();
+
 	while (m_window->isOpen()) {
 		m_window->handleEvents();
-		deltaTime = clock.restart();
 		update();
 		render();
 	}
@@ -19,24 +19,52 @@ run() {
 
 bool
 BaseApp::initialize() {
-	m_window = new Window(800, 600, "Galvan Engine");
+	m_window = new Window(1920, 1080, "Galvan Engine");
 	if (!m_window) {
 		ERROR("BaseApp", "initialize", "Error on window creation, var is null");
 		return false;
 	}
+	// Track Actor
+	Track = EngineUtilities::MakeShared<Actor>("Track");
+	if (!Track.isNull()) {
+		Track->getComponent<ShapeFactory>()->createShape(ShapeType::RECTANGLE);
 
-	// Actor Triangulo
+		// Establecer posición, rotación y escala desde Transform
+		Track->getComponent<Transform>()->setPosition(sf::Vector2f(0.0f, 0.0f));
+		Track->getComponent<Transform>()->setRotation(sf::Vector2f(0.0f, 0.0f));
+		Track->getComponent<Transform>()->setScale(sf::Vector2f(11.0f, 12.0f));
+
+		if (!texture.loadFromFile("Circuit.png")) {
+			std::cout << "Error de carga de textura" << std::endl;
+			return -1; // Manejar error de carga
+		}
+		Track->getComponent<ShapeFactory>()->getShape()->setTexture(&texture);
+	}
+
+	// Triangle Actor
 	Circle = EngineUtilities::MakeShared<Actor>("Circle");
 	if (!Circle.isNull()) {
 		Circle->getComponent<ShapeFactory>()->createShape(ShapeType::CIRCLE);
-		Circle->getComponent<ShapeFactory>()->setPosition(200.0f, 200.0f);
-		Circle->getComponent<ShapeFactory>()->setFillColor(sf::Color::Blue);
+
+		// Establecer posición, rotación y escala desde Transform
+		Circle->getComponent<Transform>()->setPosition(sf::Vector2f(200.0f, 200.0f));
+		Circle->getComponent<Transform>()->setRotation(sf::Vector2f(0.0f, 0.0f));
+		Circle->getComponent<Transform>()->setScale(sf::Vector2f(1.0f, 1.0f));
+
+		if (!Mario.loadFromFile("Characters/tile000.png")) {
+			std::cout << "Error de carga de textura" << std::endl;
+			return -1; // Manejar error de carga
+		}
+		Circle->getComponent<ShapeFactory>()->getShape()->setTexture(&Mario);
 	}
 
-	// Actor Triangulo
+	// Triangle Actor
 	Triangle = EngineUtilities::MakeShared<Actor>("Triangle");
 	if (!Triangle.isNull()) {
 		Triangle->getComponent<ShapeFactory>()->createShape(ShapeType::TRIANGLE);
+		Triangle->getComponent<Transform>()->setPosition(sf::Vector2f(200.0f, 200.0f));
+		Triangle->getComponent<Transform>()->setRotation(sf::Vector2f(0.0f, 0.0f));
+		Triangle->getComponent<Transform>()->setScale(sf::Vector2f(1.0f, 1.0f));
 	}
 
 	return true;
@@ -44,22 +72,46 @@ BaseApp::initialize() {
 
 void
 BaseApp::update() {
-	// Posicin del Mouse
+	// Update window method
+	m_window->update();
+
+	// Mouse Position
 	sf::Vector2i mousePosition = sf::Mouse::getPosition(*m_window->getWindow());
 	sf::Vector2f mousePosF(static_cast<float>(mousePosition.x),
 		static_cast<float>(mousePosition.y));
 
+	if (!Track.isNull()) {
+		Track->update(m_window->deltaTime.asSeconds());
+	}
+	if (!Triangle.isNull()) {
+		Triangle->update(m_window->deltaTime.asSeconds());
+	}
 	if (!Circle.isNull()) {
-		updateMovement(deltaTime.asSeconds(), Circle);
+		Circle->update(m_window->deltaTime.asSeconds());
+		updateMovement(m_window->deltaTime.asSeconds(), Circle);
 	}
 }
 
 void
 BaseApp::render() {
 	m_window->clear();
-	Circle->render(*m_window);
-	Triangle->render(*m_window);
+	if (!Track.isNull()) {
+		Track->render(*m_window);
+	}
+	if (!Circle.isNull()) {
+		Circle->render(*m_window);
+	}
+	if (!Triangle.isNull()) {
+		Triangle->render(*m_window);
+	}
+
+	// Mostrar el render en ImGui
+	m_window->renderToTexture();  // Finaliza el render a la textura
+	m_window->showInImGui();      // Muestra la textura en ImGui
+
+	m_window->render();
 	m_window->display();
+
 }
 
 void
@@ -70,17 +122,30 @@ BaseApp::cleanup() {
 
 void
 BaseApp::updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle) {
-	if (!circle || circle.isNull()) return;
+	// Verificar si el Circle es nulo
+	if (!circle || circle.isNull()) {
+		return;
+	}
 
+	// Obtener el componente Transform
+	auto transform = circle->getComponent<Transform>();
+	if (transform.isNull()) {
+		return;
+	}
+
+	// Posición actual del destino (punto de recorrido)
 	sf::Vector2f targetPos = waypoints[currentWaypoint];
 
-	circle->getComponent<ShapeFactory>()->Seek(targetPos, 200.0f, deltaTime, 10.0f);
+	// Llamar al Seek del Transform
+	transform->Seek(targetPos, 200.0f, deltaTime, 10.0f);
 
-	sf::Vector2f currentPos = circle->getComponent<ShapeFactory>()->getShape()->getPosition();
+	// Obtener la posición actual del actor desde Transform
+	sf::Vector2f currentPos = transform->getPosition();
 
+	// Comprobar si el actor ha alcanzado el destino (o está cerca)
 	float distanceToTarget = std::sqrt(std::pow(targetPos.x - currentPos.x, 2) + std::pow(targetPos.y - currentPos.y, 2));
 
-	if (distanceToTarget < 10.0f) {
-		currentWaypoint = (currentWaypoint + 1) % waypoints.size();
+	if (distanceToTarget < 10.0f) { // Umbral para considerar que ha llegado
+		currentWaypoint = (currentWaypoint + 1) % waypoints.size(); // Ciclar a través de los puntos
 	}
 }

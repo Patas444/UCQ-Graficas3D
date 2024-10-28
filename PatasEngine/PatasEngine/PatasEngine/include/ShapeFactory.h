@@ -1,46 +1,55 @@
-#pragma once
+﻿#pragma once
 #include "Prerequisites.h"
 #include "Component.h"
 #include "Window.h"
 
-class
-	ShapeFactory : public Component {
+class 
+ShapeFactory : public Component {
 public:
 	ShapeFactory() = default;
 
 	virtual
 	~ShapeFactory() = default;
 
-	ShapeFactory(ShapeType shapeType) :
+	ShapeFactory(ShapeType shapeType) : 
 	m_shape(nullptr), m_shapeType(ShapeType::EMPTY), Component(ComponentType::SHAPE) {}
 
-	sf::Shape*
-		createShape(ShapeType shapeType);
+	sf::Shape* 
+	createShape(ShapeType shapeType);
 
-	//Actualiza el componente de malla.
-	void
-	update(float deltaTime) override {}
+	/**
+   * @brief Actualiza el componente de malla.
+   * @param deltaTime El tiempo transcurrido desde la �ltima actualizaci�n.
+   */
+  void 
+  update(float deltaTime) override {}
 
-	//Renderiza el componente de malla.
-	void
-	render(Window window) override {}
+  /**
+   * @brief Renderiza el componente de malla.
+   * @param deviceContext Contexto del dispositivo para operaciones gr�ficas.
+   */
+  void 
+  render(Window window) override {}
 
-	void
-	setPosition(float x, float y);
+  void 
+  setPosition(float x, float y);
 
-	void
-	setPosition(const sf::Vector2f& position);
+  void 
+  setPosition(const sf::Vector2f& position);
 
-	void
-	setFillColor(const sf::Color& color);
+  void 
+  setFillColor(const sf::Color& color);
 
-	void
-	Seek(const sf::Vector2f& targetPosition, float speed, float deltaTime, float range);
+  void 
+  setRotation(float angle);
+  
+  void 
+  setScale(const sf::Vector2f& scl);
 
-	sf::Shape*
-		getShape() {
-		return m_shape;
-	}
+  sf::Shape* 
+  getShape() {
+    return m_shape;
+  }
 private:
 	sf::Shape* m_shape;
 	ShapeType m_shapeType;

@@ -1,28 +1,43 @@
+
 #include "Actor.h"
 
 Actor::Actor(std::string actorName) {
-	// Setup del nombre del Actor
+	// Setup Actor Name
 	m_name = actorName;
 
 	// Setup Shape
 	EngineUtilities::TSharedPointer<ShapeFactory> shape = EngineUtilities::MakeShared<ShapeFactory>();
 	addComponent(shape);
+
+	// Setup Transform
+	EngineUtilities::TSharedPointer<Transform> transform = EngineUtilities::MakeShared<Transform>();
+	addComponent(transform);
+
+	// Setup Sprite
+
 }
 
-void 
-Actor::
-update(float deltaTime) {
-}
+void
+Actor::update(float deltaTime) {
+	auto transform = getComponent<Transform>();
+	auto shape = getComponent<ShapeFactory>();
 
-void 
-Actor::
-render(Window& window){
-	for (unsigned int i = 0; i < components.size(); i++) {
-		window.draw(*components[i].dynamic_pointer_cast<ShapeFactory>()->getShape());
+	if (transform && shape) {
+		shape->setPosition(transform->getPosition());
+		shape->setRotation(transform->getRotation().x);
+		shape->setScale(transform->getScale());
 	}
 }
 
-void 
-Actor::
-destroy() {
+void Actor::render(Window& window)
+{
+	for (unsigned int i = 0; i < components.size(); i++) {
+		if (components[i].dynamic_pointer_cast<ShapeFactory>()) {
+			window.draw(*components[i].dynamic_pointer_cast<ShapeFactory>()->getShape());
+		}
+	}
+}
+
+void Actor::destroy()
+{
 }
