@@ -1,48 +1,70 @@
 #pragma once
 class Window;
 
-
-//Tipos de componentes disponibles en el juego.
-enum
+/**
+ * @enum ComponentType
+ * @brief Tipos de componentes disponibles en el juego.
+ */
+enum 
 ComponentType {
-NONE = 0,
-TRANSFORM = 1,
-SPRITE = 2,
-RENDERER = 3,
-PHYSICS = 4,
-AUDIOSOURCE = 5,
-SHAPE = 6,
+	NONE = 0, 
+	TRANSFORM = 1,
+	SPRITE = 2,
+	RENDERER = 3,
+	PHYSICS = 4,
+	AUDIOSOURCE = 5,
+	SHAPE = 6,
+	TEXTURE = 7
 };
 
-//Clase base abstracta para todos los componentes del juego.
-class
+/**
+ * @class Component
+ * @brief Clase base abstracta para todos los componentes del juego.
+ *
+ * La clase Component define la interfaz b?sica que todos los componentes deben implementar,
+ * permitiendo actualizar y renderizar el componente, as? como obtener su tipo.
+ */
+class 
 Component {
 public:
-
-	//Constructor por defecto.
+	/**
+	 * @brief Constructor por defecto.
+	 */
 	Component() = default;
 
-	//Constructor con tipo de componente.
+	/**
+	 * @brief Constructor con tipo de componente.
+	 * @param type Tipo del componente.
+	 */
 	Component(const ComponentType type) : m_type(type) {}
 
-
-	//Destructor virtual.
+	/**
+	 * @brief Destructor virtual.
+	 */
 	virtual
 	~Component() = default;
 
-	// Método virtual puro para actualizar el componente.
+	/**
+	 * @brief M?todo virtual puro para actualizar el componente.
+	 * @param deltaTime El tiempo transcurrido desde la ?ltima actualizaci?n.
+	 */
 	virtual void
 	update(float deltaTime) = 0;
 
-	//Método virtual puro para renderizar el componente.
+	/**
+	 * @brief M?todo virtual puro para renderizar el componente.
+	 * @param Window Contexto del dispositivo para operaciones gr?ficas.
+	 */
 	virtual void
 	render(Window window) = 0;
 
-	//Obtiene el tipo del componente.
-	ComponentType
-	getType() const { return m_type; }
+	/**
+   * @brief Obtiene el tipo del componente.
+   * @return El tipo del componente.
+   */
+  ComponentType 
+  getType() const { return m_type; }
 
 protected:
-	// Tipo de Componente.
-	ComponentType m_type; 
+	ComponentType m_type; // Tipo de Componente.
 };
