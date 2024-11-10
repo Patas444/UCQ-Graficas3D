@@ -1,6 +1,7 @@
 #pragma once
-#pragma once
 #include "Prerequisites.h"
+#include <vector>
+#include "Actor.h"
 
 class Window;
 
@@ -11,20 +12,33 @@ public:
 	~GUI() = default;
 
 	void
-		init();
+	init();
 
 	void
-		update();
+	update();
 
 	void
-		render();
+	render();
 
 	void
-		destroy();
+	destroy();
 
 	void
-		setupGUIStyle();
+	console(const std::map<ConsolErrorType, std::vector<std::string>>& programMessages);
+
+	void
+	setupGUIStyle();
+
+	void
+	hierarchy(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors, int& selectedActorID);
+
+	void
+	actorCreationMenu(std::vector<EngineUtilities::TSharedPointer<Actor>>& actors);
+
+	void
+	inspector(EngineUtilities::TSharedPointer<Actor> selectedActor);
+
 
 private:
-
+	std::map<int, std::string> m_programMessages;
 };

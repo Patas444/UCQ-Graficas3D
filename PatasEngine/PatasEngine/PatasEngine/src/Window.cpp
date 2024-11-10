@@ -1,7 +1,11 @@
 ﻿#include "Window.h"
+#include "GUI.h"
+#include "Prerequisites.h"
+#include <SFML/Graphics.hpp>
 
 Window::Window(int width, int height, const std::string& title) {
 	m_window = new sf::RenderWindow(sf::VideoMode(width, height), title);
+	
 	if (!m_window) {
 		ERROR("Window", "Window", "CHECK CONSTRUCTOR");
 	}
@@ -85,13 +89,7 @@ Window::isOpen() const {
 
 void
 Window::draw(const sf::Drawable& drawable) {
-	//if (m_window != nullptr) {
-	//	m_window->draw(drawable);
-	//}
-	//else {
-	//	ERROR("Window", "draw", "CHECK FOR WINDOW POINTER DATA");
-	//}
-
+	
 	// Dibujar en la RenderTexture en lugar de la ventana directamente
 	if (m_renderTexture.getSize().x > 0 && m_renderTexture.getSize().y > 0) {
 		m_renderTexture.draw(drawable);
@@ -115,18 +113,49 @@ Window::renderToTexture() {
 	m_renderTexture.display();
 }
 
-void
-Window::showInImGui() {
-	const sf::Texture& texture = m_renderTexture.getTexture();
+void Window::setCustomStyle() {
+	ImGuiStyle& style = ImGui::GetStyle();
 
-	// Obtener el tama�o de la textura
+	// Configuración general de los bordes y tamaños
+	style.WindowRounding = 8.0f;
+	style.FrameRounding = 5.0f;
+	style.ScrollbarRounding = 12.0f;
+	style.GrabRounding = 5.0f;
+	style.WindowBorderSize = 1.0f;
+	style.FrameBorderSize = 1.0f;
+	style.PopupBorderSize = 1.0f;
+	style.WindowPadding = ImVec2(10, 10);
+
+	// Colores de la interfaz estilo Mario Galaxy
+	ImVec4* colors = style.Colors;
+	colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.0f, 0.1f, 1.0f);       // Fondo de ventana, azul oscuro
+	colors[ImGuiCol_TitleBg] = ImVec4(0.1f, 0.1f, 0.4f, 1.0f);        // Fondo del título, morado
+	colors[ImGuiCol_TitleBgActive] = ImVec4(0.2f, 0.2f, 0.6f, 1.0f);  // Fondo del título activo
+	colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 0.2f, 1.0f);        // Fondo de cuadro, azul oscuro
+	colors[ImGuiCol_FrameBgHovered] = ImVec4(0.4f, 0.4f, 0.9f, 0.6f); // Fondo de cuadro al pasar el cursor
+	colors[ImGuiCol_FrameBgActive] = ImVec4(0.6f, 0.6f, 1.0f, 0.6f);  // Fondo de cuadro activo
+	colors[ImGuiCol_Button] = ImVec4(0.2f, 0.2f, 0.5f, 1.0f);         // Color de botón
+	colors[ImGuiCol_ButtonHovered] = ImVec4(0.3f, 0.3f, 0.7f, 1.0f);  // Color de botón al pasar el cursor
+	colors[ImGuiCol_ButtonActive] = ImVec4(0.4f, 0.4f, 0.8f, 1.0f);   // Color de botón activo
+	colors[ImGuiCol_Text] = ImVec4(0.9f, 0.9f, 0.9f, 1.0f);           // Color de texto blanco
+	colors[ImGuiCol_Border] = ImVec4(0.6f, 0.6f, 0.9f, 0.7f);         // Color de borde, azul claro
+	colors[ImGuiCol_CheckMark] = ImVec4(0.8f, 0.8f, 1.0f, 1.0f);      // Color de las marcas de selección
+	colors[ImGuiCol_SliderGrab] = ImVec4(0.6f, 0.6f, 1.0f, 1.0f);     // Color del deslizador
+	colors[ImGuiCol_SliderGrabActive] = ImVec4(0.8f, 0.8f, 1.0f, 1.0f); // Color del deslizador activo
+}
+ 
+void Window::showInImGui() {
+	setCustomStyle();  // Llama a la función para aplicar el estilo personalizado
+	const sf::Texture& texture = m_renderTexture.getTexture();
 	ImVec2 size(texture.getSize().x, texture.getSize().y);
 
-	// Renderizar la textura en ImGui con las coordenadas UV invertidas en el eje Y
+	// Panel de la Escena
 	ImGui::Begin("Scene");
 	ImGui::Image((void*)(intptr_t)texture.getNativeHandle(), size, ImVec2(0, 1), ImVec2(1, 0));
 	ImGui::End();
+
 }
+
 
 void
 Window::update() {

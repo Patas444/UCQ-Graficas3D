@@ -12,9 +12,6 @@ Actor::Actor(std::string actorName) {
 	// Setup Transform
 	EngineUtilities::TSharedPointer<Transform> transform = EngineUtilities::MakeShared<Transform>();
 	addComponent(transform);
-
-	// Setup Sprite
-
 }
 
 void
@@ -40,4 +37,9 @@ void Actor::render(Window& window)
 
 void Actor::destroy()
 {
+}
+
+std::string
+Actor::getName() const {
+	return m_name;
 }

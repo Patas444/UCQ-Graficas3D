@@ -17,7 +17,7 @@ public:
 	sf::Shape* 
 	createShape(ShapeType shapeType);
 
-	/**
+  /**
    * @brief Actualiza el componente de malla.
    * @param deltaTime El tiempo transcurrido desde la �ltima actualizaci�n.
    */

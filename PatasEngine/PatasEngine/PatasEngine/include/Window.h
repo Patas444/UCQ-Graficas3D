@@ -1,5 +1,5 @@
 ﻿#pragma once
-#include "Prerequisites.h"
+#include <SFML/Graphics.hpp>
 
 class 
 Window {
@@ -50,6 +50,9 @@ public:
 	void 
 	renderToTexture();
 
+	void
+	setCustomStyle();
+
 	void 
 	showInImGui();
 
@@ -75,4 +78,5 @@ public:
 	sf::RenderTexture m_renderTexture;
 	sf::Time deltaTime;
 	sf::Clock clock;
+	
 };

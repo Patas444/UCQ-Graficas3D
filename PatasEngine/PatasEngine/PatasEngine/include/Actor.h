@@ -5,7 +5,7 @@
 #include "Transform.h"
 
 class
-    Actor : Entity {
+Actor : Entity {
 public:
     /**
      * @brief Constructor por defecto.
@@ -18,27 +18,34 @@ public:
      * @brief Destructor virtual.
      */
     virtual
-        ~Actor() = default;
+     ~Actor() = default;
 
     /**
      * @brief Actualiza el actor.
      * @param deltaTime El tiempo transcurrido desde la �ltima actualizaci�n.
      */
     void
-        update(float deltaTime) override;
+    update(float deltaTime) override;
 
     /**
      * @brief Renderiza el actor.
      * @param window Contexto del dispositivo para operaciones gr�ficas.
      */
     void
-        render(Window& window) override;
+    render(Window& window) override;
 
     /**
      * @brief Destruye el actor y libera los recursos asociados.
      */
     void
-        destroy();
+    destroy();
+
+
+    /**
+    * @brief Función para obtener únicamente el nombre del actor
+    */
+    std::string
+    getName() const;
 
     /**
      * @brief Obtiene un componente espec�fico del actor.
@@ -47,7 +54,7 @@ public:
      */
     template <typename T>
     EngineUtilities::TSharedPointer<T>
-        getComponent();
+    getComponent();
 private:
     std::string m_name = "Actor"; ///< Nombre del actor.
 };

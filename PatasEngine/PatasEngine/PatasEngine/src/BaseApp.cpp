@@ -1,9 +1,23 @@
 #include "BaseApp.h"
+#include "Services/NotificationSystem.h"
+
+BaseApp::~BaseApp()
+{
+	
+	NotificationService::getInstance().saveMessagesToFile("LogData.txt");
+}
 
 int
 BaseApp::run() {
+	NotificationService& notifier = NotificationService::getInstance();
+
 	if (!initialize()) {
+		notifier.addMessage(ConsolErrorType::ERROR, "Initializes result on a false statemente, check method validations");
+		notifier.saveMessagesToFile("LogData.txt");
 		ERROR("BaseApp", "run", "Initializes result on a false statemente, check method validations");
+	}
+	else {
+		notifier.addMessage(ConsolErrorType::NORMAL, "All programs were initialized correctlY");
 	}
 	m_GUI.init();
 
@@ -19,7 +33,8 @@ BaseApp::run() {
 
 bool
 BaseApp::initialize() {
-	m_window = new Window(1920, 1080, "Galvan Engine");
+	NotificationService& notifier = NotificationService::getInstance();
+	m_window = new Window(1920, 1080, "Patas Engine");
 	if (!m_window) {
 		ERROR("BaseApp", "initialize", "Error on window creation, var is null");
 		return false;
@@ -41,7 +56,7 @@ BaseApp::initialize() {
 		Track->getComponent<ShapeFactory>()->getShape()->setTexture(&texture);
 	}
 
-	// Triangle Actor
+	// Circle Actor
 	Circle = EngineUtilities::MakeShared<Actor>("Circle");
 	if (!Circle.isNull()) {
 		Circle->getComponent<ShapeFactory>()->createShape(ShapeType::CIRCLE);
@@ -57,6 +72,7 @@ BaseApp::initialize() {
 		}
 		Circle->getComponent<ShapeFactory>()->getShape()->setTexture(&Mario);
 	}
+	m_actors.push_back(Circle);
 
 	// Triangle Actor
 	Triangle = EngineUtilities::MakeShared<Actor>("Triangle");
@@ -66,7 +82,7 @@ BaseApp::initialize() {
 		Triangle->getComponent<Transform>()->setRotation(sf::Vector2f(0.0f, 0.0f));
 		Triangle->getComponent<Transform>()->setScale(sf::Vector2f(1.0f, 1.0f));
 	}
-
+	m_actors.push_back(Triangle);
 	return true;
 }
 
@@ -90,11 +106,39 @@ BaseApp::update() {
 		Circle->update(m_window->deltaTime.asSeconds());
 		updateMovement(m_window->deltaTime.asSeconds(), Circle);
 	}
+	for (auto& actor : m_actors) {
+		if (!actor.isNull()) {
+			actor->update(m_window->deltaTime.asSeconds());
+			if (actor->getName() == "Circle") {
+				MovimientoCirculo(m_window->deltaTime.asSeconds(), actor);
+			}
+		}
+	}
 }
+
+void BaseApp::MovimientoCirculo(float deltaTime, EngineUtilities::TSharedPointer<Actor> Circle) {
+	if (Circle.isNull()) return;
+
+	auto transform = Circle->getComponent<Transform>();
+	if (transform.isNull()) return;
+
+	sf::Vector2f targetPos = waypoints[ActualPosition];
+	transform->Seek(targetPos, 200.0f, deltaTime, 10.0f);
+	sf::Vector2f currentPos = transform->getPosition();
+	float distanceToTarget = std::sqrt(std::pow(targetPos.x - currentPos.x, 2) + std::pow(targetPos.y - currentPos.y, 2));
+
+	if (distanceToTarget < 10.0f) {
+		ActualPosition = (ActualPosition + 1) % waypoints.size();
+	}
+}
+
+int selectedActorID = -1;
 
 void
 BaseApp::render() {
+	NotificationService& notifier = NotificationService::getInstance();
 	m_window->clear();
+
 	if (!Track.isNull()) {
 		Track->render(*m_window);
 	}
@@ -105,9 +149,28 @@ BaseApp::render() {
 		Triangle->render(*m_window);
 	}
 
+	for (auto& actor : m_actors) {
+		if (!actor.isNull()) {
+			actor->render(*m_window);
+		}
+	}
+
 	// Mostrar el render en ImGui
 	m_window->renderToTexture();  // Finaliza el render a la textura
 	m_window->showInImGui();      // Muestra la textura en ImGui
+
+	//Muestra consola de notificaciones
+	m_GUI.console(notifier.getNotifications());
+
+	//Muestra ventana
+	m_GUI.hierarchy(m_actors, selectedActorID);
+
+	if (selectedActorID >= 0 && selectedActorID < m_actors.size()) {
+		m_GUI.inspector(m_actors[selectedActorID]);
+	}
+
+	m_GUI.actorCreationMenu(m_actors);
+
 
 	m_window->render();
 	m_window->display();
@@ -124,13 +187,13 @@ void
 BaseApp::updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle) {
 	// Verificar si el Circle es nulo
 	if (!circle || circle.isNull()) {
-		return;
+	return;
 	}
 
 	// Obtener el componente Transform
 	auto transform = circle->getComponent<Transform>();
 	if (transform.isNull()) {
-		return;
+	return;
 	}
 
 	// Posición actual del destino (punto de recorrido)
@@ -146,6 +209,6 @@ BaseApp::updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> 
 	float distanceToTarget = std::sqrt(std::pow(targetPos.x - currentPos.x, 2) + std::pow(targetPos.y - currentPos.y, 2));
 
 	if (distanceToTarget < 10.0f) { // Umbral para considerar que ha llegado
-		currentWaypoint = (currentWaypoint + 1) % waypoints.size(); // Ciclar a través de los puntos
+	currentWaypoint = (currentWaypoint + 1) % waypoints.size(); // Ciclar a través de los puntos
 	}
-}
+};

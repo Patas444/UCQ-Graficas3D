@@ -125,5 +125,8 @@
     <ClInclude Include="..\..\..\ThirdParties\imgui-sfml-2.6.x\imstb_textedit.h">
       <Filter>IMGUI</Filter>
     </ClInclude>
+    <ClInclude Include="include\Services\NotificationSystem.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

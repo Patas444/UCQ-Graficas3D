@@ -1,43 +1,52 @@
 #pragma once
+#include <SFML/Graphics.hpp>
 #include "Prerequisites.h"
-#include "Window.h"
+#include <Window.h>
 #include "ShapeFactory.h"
 #include "Actor.h"
 #include "GUI.h"
+#include "Services/NotificationSystem.h"
+
 
 class
-	BaseApp {
+BaseApp {
+
 public:
 	BaseApp() = default;
-	~BaseApp() = default;
+	~BaseApp();
 
 	// Funcion encargada de ejecutar la aplicacion en main
 	int
-		run();
+	run();
 
 	// Funcion de inicializacion
 	bool
-		initialize();
+	initialize();
 
 	// Funcion que se actualiza por frame
 	void
-		update();
+	update();
 
 	// Funcion de renderizado
 	void
-		render();
+	render();
 
 	void
-		cleanup();
+	cleanup();
 
 	void
-		updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle);
+	updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle);
+	void
+	MovimientoCirculo(float deltaTime, EngineUtilities::TSharedPointer<Actor> Circle);
+	int
+	ActualPosition = 0; //Posicion actual de los waypoints
 
 private:
 	Window* m_window;
 	EngineUtilities::TSharedPointer<Actor> Triangle;
 	EngineUtilities::TSharedPointer<Actor> Circle;
 	EngineUtilities::TSharedPointer<Actor> Track;
+	std::vector< EngineUtilities::TSharedPointer<Actor>> m_actors;
 
 	// Seek Activity
 	int currentWaypoint = 0;
