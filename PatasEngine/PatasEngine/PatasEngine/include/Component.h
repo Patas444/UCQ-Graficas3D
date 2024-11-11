@@ -1,10 +1,7 @@
 ﻿#pragma once
 class Window;
 
-/**
- * @enum ComponentType
- * @brief Tipos de componentes disponibles en el juego.
- */
+// Tipos de componentes disponibles en el juego.
 enum 
 ComponentType {
 	NONE = 0, 
@@ -18,50 +15,39 @@ ComponentType {
 };
 
 /**
- * @class Component
  * @brief Clase base abstracta para todos los componentes del juego.
- *
  * La clase Component define la interfaz b�sica que todos los componentes deben implementar,
  * permitiendo actualizar y renderizar el componente, as� como obtener su tipo.
  */
 class 
 Component {
 public:
-	/**
-	 * @brief Constructor por defecto.
-	 */
-	Component() = default;
 
-	/**
-	 * @brief Constructor con tipo de componente.
-	 * @param type Tipo del componente.
-	 */
+	// Constructor por defecto.
+	Component() = default;
+	
+	// Constructor con tipo de componente.	
 	Component(const ComponentType type) : m_type(type) {}
 
-	/**
-	 * @brief Destructor virtual.
-	 */
+	// Destructor virtual.
 	virtual
 	~Component() = default;
 
 	/**
-	 * @brief M�todo virtual puro para actualizar el componente.
-	 * @param deltaTime El tiempo transcurrido desde la �ltima actualizaci�n.
+	 * @brief Metodo virtual puro para actualizar el componente.
+	 * El tiempo transcurrido desde la ultima actualizaci�n.
 	 */
 	virtual void
 	update(float deltaTime) = 0;
 
 	/**
-	 * @brief M�todo virtual puro para renderizar el componente.
-	 * @param Window Contexto del dispositivo para operaciones gr�ficas.
+	 * @brief Metodo virtual puro para renderizar el componente.
+	 * Contexto del dispositivo para operaciones graficas.
 	 */
 	virtual void
 	render(Window window) = 0;
 
-	/**
-   * @brief Obtiene el tipo del componente.
-   * @return El tipo del componente.
-   */
+  // Obtiene el tipo del componente.
   ComponentType 
   getType() const { return m_type; }
 

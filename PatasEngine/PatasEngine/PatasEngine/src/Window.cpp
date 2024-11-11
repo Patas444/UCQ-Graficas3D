@@ -4,8 +4,10 @@
 #include <SFML/Graphics.hpp>
 
 Window::Window(int width, int height, const std::string& title) {
+	// Crear una nueva ventana con el título y las dimensiones especificadas.
 	m_window = new sf::RenderWindow(sf::VideoMode(width, height), title);
-	
+
+	// Verifica si la ventana se creó correctamente
 	if (!m_window) {
 		ERROR("Window", "Window", "CHECK CONSTRUCTOR");
 	}
@@ -22,11 +24,13 @@ Window::Window(int width, int height, const std::string& title) {
 	}
 }
 
+// Destructor de la clase Window que libera los recursos de ImGui y de la ventana.
 Window::~Window() {
 	ImGui::SFML::Shutdown();
 	delete m_window;
 }
 
+// Maneja los eventos de la ventana, incluyendo el cierre y el redimensionamiento.
 void
 Window::handleEvents() {
 	sf::Event event;
@@ -53,6 +57,7 @@ Window::handleEvents() {
 	}
 }
 
+// Limpia la ventana y la RenderTexture.
 void
 Window::clear() {
 	if (m_window != nullptr) {
@@ -66,6 +71,7 @@ Window::clear() {
 	}
 }
 
+// Muestra el contenido de la ventana en pantalla.
 void
 Window::display() {
 	if (m_window != nullptr) {
@@ -76,6 +82,7 @@ Window::display() {
 	}
 }
 
+// Verifica si la ventana está abierta.
 bool
 Window::isOpen() const {
 	if (m_window != nullptr) {
@@ -87,6 +94,7 @@ Window::isOpen() const {
 	}
 }
 
+// Dibuja un objeto en la RenderTexture.
 void
 Window::draw(const sf::Drawable& drawable) {
 	
@@ -96,6 +104,7 @@ Window::draw(const sf::Drawable& drawable) {
 	}
 }
 
+// Obtiene el puntero a la ventana.
 sf::RenderWindow*
 Window::getWindow() {
 	if (m_window != nullptr) {
@@ -107,12 +116,14 @@ Window::getWindow() {
 	}
 }
 
+// Finaliza el proceso de renderizado en la RenderTexture.
 void
 Window::renderToTexture() {
 	// Despu�s de renderizar todo lo que quieras en la textura
 	m_renderTexture.display();
 }
 
+// Aplica un estilo personalizado a la interfaz de ImGui.
 void Window::setCustomStyle() {
 	ImGuiStyle& style = ImGui::GetStyle();
 
@@ -143,7 +154,8 @@ void Window::setCustomStyle() {
 	colors[ImGuiCol_SliderGrab] = ImVec4(0.6f, 0.6f, 1.0f, 1.0f);     // Color del deslizador
 	colors[ImGuiCol_SliderGrabActive] = ImVec4(0.8f, 0.8f, 1.0f, 1.0f); // Color del deslizador activo
 }
- 
+
+// Muestra la RenderTexture en una ventana de ImGui.
 void Window::showInImGui() {
 	setCustomStyle();  // Llama a la función para aplicar el estilo personalizado
 	const sf::Texture& texture = m_renderTexture.getTexture();
@@ -156,7 +168,7 @@ void Window::showInImGui() {
 
 }
 
-
+// Actualiza ImGui con el deltaTime de la ventana.
 void
 Window::update() {
 	// Almacena el deltaTime una sola vez
@@ -167,11 +179,13 @@ Window::update() {
 
 }
 
+// Renderiza ImGui en la ventana.
 void Window::render()
 {
 	ImGui::SFML::Render(*m_window);
 }
 
+// Libera recursos de ImGui y elimina el puntero de la ventana.
 void
 Window::destroy() {
 	ImGui::SFML::Shutdown();

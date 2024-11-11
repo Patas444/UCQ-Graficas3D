@@ -7,30 +7,29 @@ class Window;
 class 
 Entity {
 public:
-	/**
-   * @brief Destructor virtual.
-   */
+
+    // Destructor virtual.
 	virtual
 	~Entity() = default;
 
-	/**
-   * @brief M�todo virtual puro para actualizar la entidad.
-   * @param deltaTime El tiempo transcurrido desde la �ltima actualizaci�n.
+  /**
+   * @brief Metodo virtual puro para actualizar la entidad.
+   * deltaTime El tiempo transcurrido desde la �ltima actualizacio
+   n.
    */
   virtual void 
   update(float deltaTime) = 0;
 
 	/**
-   * @brief M�todo virtual puro para renderizar la entidad.
-   * @param Window Contexto del dispositivo para operaciones gr�ficas.
+   * @brief Metodo virtual puro para renderizar la entidad.
+   * Window Contexto del dispositivo para operaciones graficas.
    */
   virtual void 
   render(Window& window) = 0;
 
   /**
    * @brief Agrega un componente a la entidad.
-   * @tparam T Tipo del componente, debe derivar de Component.
-   * @param component Puntero compartido al componente que se va a agregar.
+   * Puntero compartido al componente que se va a agregar.
    */
   template <typename T>
   void addComponent(EngineUtilities::TSharedPointer<T> component) {
@@ -42,8 +41,7 @@ public:
 
   /**
    * @brief Obtiene un componente de la entidad.
-   * @tparam T Tipo del componente que se va a obtener.
-   * @return Puntero compartido al componente, o nullptr si no se encuentra.
+   * Tipo T del componente que se va a obtener.
    */
   template<typename T>
   EngineUtilities::TSharedPointer<T>

@@ -4,30 +4,34 @@
 #include "transform.h"
 #include "Services/NotificationSystem.h"
 
+// Inicializa la GUI estableciendo el estilo de la interfaz.
 void
 GUI::init() {
-	// Setup GUI Style
-	setupGUIStyle();
+					
+	setupGUIStyle(); // Setup GUI Style
 }
 
+// Actualiza el estado de la GUI. 
 void GUI::update()
 {
 }
 
+// Renderiza la GUI.
 void GUI::render()
 {
 }
 
+// Libera recursos y destruye la GUI.
 void
 GUI::destroy() {
 }
 
+// Configuraci�n de los colores basados en el estilo de Unreal Engine 5
 void
 GUI::setupGUIStyle() {
 	ImGuiStyle& style = ImGui::GetStyle();
 	ImVec4* colors = style.Colors;
 
-	// Configuraci�n de los colores basados en el estilo de Unreal Engine 5
 	colors[ImGuiCol_WindowBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);  // Fondo de ventana
 	colors[ImGuiCol_Border] = ImVec4(0.40f, 0.40f, 0.40f, 0.50f);  // Bordes
 	colors[ImGuiCol_FrameBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.00f);  // Fondo de cuadros
@@ -60,6 +64,11 @@ GUI::setupGUIStyle() {
 	style.PopupBorderSize = 1.0f;   // Grosor del borde de popups
 }
 
+/**
+ * @brief Muestra una consola en la interfaz,
+ * Permite visualizar los mensajes de error, advertencia e información.
+ * También permite el filtrado de mensajes.
+ */
 void
 GUI::console(const std::map<ConsolErrorType, std::vector<std::string>>& programMessages) {
 	ImGui::Begin("Console");
@@ -95,6 +104,10 @@ GUI::console(const std::map<ConsolErrorType, std::vector<std::string>>& programM
 	ImGui::End();
 }
 
+/**
+ * @brief Muestra la jerarquía de actores en la interfaz y permite seleccionar un actor.
+ * Permite visualizar la posicion y escala del actor seleccionado.
+ */
 void GUI::hierarchy(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors, int& selectedActorID) {
 	ImGui::Begin("Hierarchy"); // Abrir la ventana de jerarquía
 
@@ -110,6 +123,10 @@ void GUI::hierarchy(const std::vector<EngineUtilities::TSharedPointer<Actor>>& a
 	ImGui::End(); // Cerrar la ventana de jerarquía
 }
 
+/**
+ * @brief Muestra la ventana del Inspector.
+ * Permite visualizar y modificación de atributos del actor actualmente seleccionado.
+ */
 void GUI::inspector(EngineUtilities::TSharedPointer<Actor> selectedActor) {
 	if (selectedActor.isNull()) return;
 
@@ -137,6 +154,11 @@ void GUI::inspector(EngineUtilities::TSharedPointer<Actor> selectedActor) {
 	ImGui::End(); // Cerrar la ventana de Inspector
 }
 
+/**
+ * @brief Muestra un menú para la creación de actores. permitiendo seleccionar nombre y forma.
+ * Permite crear un actor con cualquiera de las siguintes formas(Cuadrado/Circulo/Triangulo)
+ * y darle un nombre.
+ */
 void GUI::actorCreationMenu(std::vector<EngineUtilities::TSharedPointer<Actor>>& actors) {
 	static char actorName[128] = "";  // Para almacenar el nombre del actor temporalmente
 	static int selectedShape = 0;     // 0: Rectángulo, 1: Círculo, 2: Triángulo

@@ -1,4 +1,3 @@
-
 #include "Actor.h"
 
 Actor::Actor(std::string actorName) {
@@ -14,6 +13,11 @@ Actor::Actor(std::string actorName) {
 	addComponent(transform);
 }
 
+/**
+ * @brief Actualiza los componentes del actor.
+ * Sincroniza la posición, rotación y escala del objeto `ShapeFactory`
+ * con los valores de transformación definidos en `Transform`.
+ */
 void
 Actor::update(float deltaTime) {
 	auto transform = getComponent<Transform>();
@@ -26,6 +30,10 @@ Actor::update(float deltaTime) {
 	}
 }
 
+/**
+ * @brief Renderiza el actor en la ventana proporcionada.
+ * Recorre los componentes y dibuja el `ShapeFactory` asociado si está presente.
+ */
 void Actor::render(Window& window)
 {
 	for (unsigned int i = 0; i < components.size(); i++) {
@@ -35,10 +43,15 @@ void Actor::render(Window& window)
 	}
 }
 
+/**
+ * @brief Destruye el actor.
+ * Método vacío para potencial limpieza de recursos asociados al actor.
+ */
 void Actor::destroy()
 {
 }
 
+// Obtiene el nombre del actor.
 std::string
 Actor::getName() const {
 	return m_name;

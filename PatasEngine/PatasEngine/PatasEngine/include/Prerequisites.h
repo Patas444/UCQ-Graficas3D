@@ -28,7 +28,7 @@ enum
     RECTANGLE = 2,
     TRIANGLE = 3
 };
-
+// Enums (Tipo de errores u avisos)
 enum ConsolErrorType {
     NORMAL = 0,
     WARNING = 1,

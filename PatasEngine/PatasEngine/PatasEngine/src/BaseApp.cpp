@@ -7,6 +7,10 @@ BaseApp::~BaseApp()
 	NotificationService::getInstance().saveMessagesToFile("LogData.txt");
 }
 
+/**
+ * @brief Ejecuta el ciclo principal de la aplicación.
+ * Inicializa la aplicación y entra en el bucle de renderizado y actualización.
+ */
 int
 BaseApp::run() {
 	NotificationService& notifier = NotificationService::getInstance();
@@ -30,7 +34,10 @@ BaseApp::run() {
 	cleanup();
 	return 0;
 }
-
+/**
+ * @brief Inicializa los recursos y objetos necesarios para la aplicación.
+ * Configura la ventana principal, crea los actores y asigna texturas.
+ */
 bool
 BaseApp::initialize() {
 	NotificationService& notifier = NotificationService::getInstance();
@@ -86,6 +93,10 @@ BaseApp::initialize() {
 	return true;
 }
 
+/**
+ * @brief Actualiza el estado de la aplicación en cada cuadro.
+ * Actualiza la ventana y la posición de los actores, incluyendo el seguimiento de waypoints.
+ */
 void
 BaseApp::update() {
 	// Update window method
@@ -116,6 +127,7 @@ BaseApp::update() {
 	}
 }
 
+// Controla el movimiento de un actor específico usando waypoints.
 void BaseApp::MovimientoCirculo(float deltaTime, EngineUtilities::TSharedPointer<Actor> Circle) {
 	if (Circle.isNull()) return;
 
@@ -134,6 +146,12 @@ void BaseApp::MovimientoCirculo(float deltaTime, EngineUtilities::TSharedPointer
 
 int selectedActorID = -1;
 
+
+/**
+ * @brief Renderiza todos los actores y las interfaces de usuario.
+ * Llama a los métodos de renderizado de cada actor, muestra el contenido en ImGui,
+ * y presenta las herramientas de interfaz gráfica.
+ */
 void
 BaseApp::render() {
 	NotificationService& notifier = NotificationService::getInstance();
@@ -177,12 +195,14 @@ BaseApp::render() {
 
 }
 
+// Libera los recursos de la aplicación.
 void
 BaseApp::cleanup() {
 	m_window->destroy();
 	delete m_window;
 }
 
+// Actualiza el movimiento del actor Circle basado en puntos de recorrido.
 void
 BaseApp::updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle) {
 	// Verificar si el Circle es nulo

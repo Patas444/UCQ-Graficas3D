@@ -11,48 +11,41 @@ public:
 	void
 	handleEvents();
 
-	/**
-	 * @brief Limpia el contenido de la ventana con el color predeterminado.
-	 */
+	// Limpia el contenido de la ventana con el color predeterminado.
 	void 
 	clear();
 
-	/**
-	 * @brief Muestra el contenido de la ventana en la pantalla.
-	 */
+	// Muestra el contenido de la ventana en la pantalla.
 	void 
 	display();
 
-	/**
-	 * @brief Verifica si la ventana sigue abierta.
-	 *
-	 * @return true si la ventana est� abierta, false en caso contrario.
-	 */
+	// Verifica si la ventana sigue abierta.
 	bool 
 	isOpen() const;
 
 	/**
 	 * @brief Dibuja un objeto que puede ser dibujado en la ventana.
-	 *
-	 * @param drawable Referencia a un objeto SFML que puede ser dibujado.
+	 * drawable Referencia a un objeto SFML que puede ser dibujado.
 	 */
 	void 
 	draw(const sf::Drawable& drawable);
 
 	/**
 	 * @brief Obtiene el objeto interno SFML RenderWindow.
-	 *
-	 * @return Un puntero al objeto interno SFML RenderWindow.
+	 * Un puntero al objeto interno SFML RenderWindow.
 	 */
 	sf::RenderWindow* 
 	getWindow();
 
+	// Renderiza el contenido de la ventana en una textura.
 	void 
 	renderToTexture();
 
+	// Aplica un estilo personalizado a la ventana.
 	void
 	setCustomStyle();
 
+	// Muestra el contenido de la ventana en una interfaz de ImGui.
 	void 
 	showInImGui();
 
@@ -68,15 +61,17 @@ public:
 	void
 	render();
 
+	// Libera los recursos utilizados por la ventana.
 	void
 	destroy();
 
 private:
-	sf::RenderWindow* m_window;
-	sf::View m_view;
+	sf::RenderWindow* m_window; // Puntero al objeto `RenderWindow` de SFML.
+	sf::View m_view; // Vista de la ventana para manejar la perspectiva de visualización.
+
 public:
-	sf::RenderTexture m_renderTexture;
-	sf::Time deltaTime;
-	sf::Clock clock;
+	sf::RenderTexture m_renderTexture; // Textura de renderizado para almacenamiento de gráficos.
+	sf::Time deltaTime; // Tiempo transcurrido entre frames.
+	sf::Clock clock; // Reloj para calcular el tiempo transcurrido entre frames.
 	
 };

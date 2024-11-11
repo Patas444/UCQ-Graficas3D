@@ -3,7 +3,6 @@
 #include "Window.h"
 
 sf::RenderWindow* window;
-//sf::CircleShape* shape;
 
 int
 main() {

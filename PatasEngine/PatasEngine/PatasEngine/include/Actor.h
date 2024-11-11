@@ -60,7 +60,7 @@ private:
 };
 
 /**
- * El prop�sito de esta funci�n es buscar y devolver un componente espec�fico de un actor,
+ * El prop�sito de esta funcion es buscar y devolver un componente espec�fico de un actor,
  * utilizando el tipo de componente especificado como argumento de la plantilla.
  * Si el componente no se encuentra, la funci�n devuelve nullptr.
  */
