@@ -130,28 +130,82 @@ void GUI::hierarchy(const std::vector<EngineUtilities::TSharedPointer<Actor>>& a
 void GUI::inspector(EngineUtilities::TSharedPointer<Actor> selectedActor) {
 	if (selectedActor.isNull()) return;
 
-	ImGui::Begin("Inspector"); // Abrir la ventana de Inspector
+	ImGui::Begin("Inspector"); // Abrir la ventana del Inspector
 
+	// Mostrar el nombre del actor
 	ImGui::Text("Actor: %s", selectedActor->getName().c_str());
 
 	auto transform = selectedActor->getComponent<Transform>();
 	if (!transform.isNull()) {
 		sf::Vector2f position = transform->getPosition();
+		sf::Vector2f rotation = transform->getRotation(); // Cambié esto a vector para alinearlo con el formato
 		sf::Vector2f scale = transform->getScale();
 
-		// Mostrar y editar posición
-		if (ImGui::InputFloat2("Position", reinterpret_cast<float*>(&position))) {
-			transform->setPosition(position);
-		}
+		ImGui::Separator();
 
-		// Mostrar y editar escala
-		if (ImGui::InputFloat2("Scale", reinterpret_cast<float*>(&scale))) {
-			transform->setScale(scale);
-		}
+		// Sección de posición
+		ImGui::Text("Position");
+		ImGui::PushItemWidth(50.0f);
 
+		// Eje X (rojo)
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.1f, 0.1f, 1.0f));
+		ImGui::Text("X");
+		ImGui::PopStyleColor();
+		ImGui::SameLine();
+		ImGui::InputFloat("##PosX", &position.x);
+
+		// Eje Y (verde)
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));
+		ImGui::Text("Y");
+		ImGui::PopStyleColor();
+		ImGui::SameLine();
+		ImGui::InputFloat("##PosY", &position.y);
+
+		ImGui::Separator();
+
+		// Sección de rotación
+		ImGui::Text("Rotation");
+
+		// Eje X (rojo)
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.1f, 0.1f, 1.0f));
+		ImGui::Text("X");
+		ImGui::PopStyleColor();
+		ImGui::SameLine();
+		ImGui::InputFloat("##RotX", &rotation.x);
+
+		// Eje Y (verde)
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));
+		ImGui::Text("Y");
+		ImGui::PopStyleColor();
+		ImGui::SameLine();
+		ImGui::InputFloat("##RotY", &rotation.y);
+
+		ImGui::Separator();
+
+		// Sección de escala
+		ImGui::Text("Scale");
+
+		// Eje X (rojo)
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.1f, 0.1f, 1.0f));
+		ImGui::Text("X");
+		ImGui::PopStyleColor();
+		ImGui::SameLine();
+		ImGui::InputFloat("##ScaleX", &scale.x);
+
+		// Eje Y (verde)
+		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));
+		ImGui::Text("Y");
+		ImGui::PopStyleColor();
+		ImGui::SameLine();
+		ImGui::InputFloat("##ScaleY", &scale.y);
+
+		// Aplicar cambios a la transformación
+		transform->setPosition(position);
+		transform->setRotation(rotation);
+		transform->setScale(scale);
 	}
 
-	ImGui::End(); // Cerrar la ventana de Inspector
+	ImGui::End(); // Cerrar la ventana del Inspector
 }
 
 /**
