@@ -64,7 +64,6 @@ public:
 	void
 	inspector(EngineUtilities::TSharedPointer<Actor> selectedActor);
 
-
 private:
 	std::map<int, std::string> m_programMessages;
 };

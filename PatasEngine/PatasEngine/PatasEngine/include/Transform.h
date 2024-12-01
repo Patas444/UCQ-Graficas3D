@@ -90,6 +90,22 @@ public:
         getScale() {
         return scale;
     }
+
+    float*
+        getPosData() {
+        return &position.x;
+    }
+
+    float*
+        getRotData() {
+        return &rotation.x;
+    }
+
+    float*
+        getScaData() {
+        return &scale.x;
+    }
+
 private:
     sf::Vector2f position;  // Posicion del objeto.
     sf::Vector2f rotation;  // Rotacion del objeto.

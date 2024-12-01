@@ -258,4 +258,5 @@ void GUI::actorCreationMenu(std::vector<EngineUtilities::TSharedPointer<Actor>>&
 		}
 	}
 	ImGui::End();
+
 }
