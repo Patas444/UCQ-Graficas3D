@@ -68,7 +68,7 @@ private:
 	* (En este caso del Circle/Mario :) ).
 	* Los actores seguirán estos puntos de referencia en el orden establecido.
 	*/
-	std::vector<sf::Vector2f> waypoints = {
+	std::vector<Vector2> waypoints = {
 		{720.0f, 350.0f},
 		{720.0f, 260.0f},
 		{125.0f, 50.0f},

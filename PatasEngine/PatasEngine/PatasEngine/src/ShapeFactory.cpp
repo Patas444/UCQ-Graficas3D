@@ -43,9 +43,9 @@ ShapeFactory::setPosition(float x, float y) {
 
 // Define la posición de la figura usando un vector sf::Vector2f.
 void
-ShapeFactory::setPosition(const sf::Vector2f& position) {
+ShapeFactory::setPosition(const Vector2& position) {
 	if (m_shape) {
-		m_shape->setPosition(position);
+		m_shape->setPosition({ position.x, position.y });
 	}
 }
 
@@ -59,9 +59,9 @@ ShapeFactory::setRotation(float angle) {
 
 // Establece la escala de la figura usando un vector sf::Vector2f.
 void
-ShapeFactory::setScale(const sf::Vector2f& scl) {
+ShapeFactory::setScale(const Vector2& scl) {
 	if (m_shape) {
-		m_shape->setScale(scl);
+		m_shape->setScale({ scl.x, scl.y });
 	}
 }
 

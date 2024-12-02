@@ -2,6 +2,7 @@
 #include "Prerequisites.h"
 #include "Component.h"
 #include "Window.h"
+#include "Vector2.h"
 
 class
     Transform : public Component {
@@ -41,11 +42,11 @@ public:
      * @param range La distancia mínima antes de que el movimiento hacia el objetivo se detenga.
      */
     void
-    Seek(const sf::Vector2f& targetPosition,
+    Seek(const Vector2& targetPosition,
             float speed,
             float deltaTime,
             float range) {
-        sf::Vector2f direction = targetPosition - position;
+        Vector2 direction = targetPosition - position;
         float length = std::sqrt(direction.x * direction.x + direction.y * direction.y);
 
         if (length > range) {
@@ -57,36 +58,36 @@ public:
 
     // Establece la posición del objeto.
     void
-        setPosition(const sf::Vector2f& _position) {
+        setPosition(const Vector2& _position) {
         position = _position;
     }
 
     // Establece la nueva rotación del objeto.
     void
-        setRotation(const sf::Vector2f& _rotation) {
+        setRotation(const Vector2& _rotation) {
         rotation = _rotation;
     }
 
     // Establece la nueva escala del objeto.
     void
-        setScale(const sf::Vector2f& _scale) {
+        setScale(const Vector2& _scale) {
         scale = _scale;
     }
 
     // Obtiene la posición actual del objeto.
-    sf::Vector2f&
+    Vector2&
         getPosition() {
         return position;
     }
 
     // Obtiene la rotación actual del objeto.
-    sf::Vector2f&
+    Vector2&
         getRotation() {
         return rotation;
     }
 
     // Obtiene la escala actual del objeto.
-    sf::Vector2f&
+    Vector2&
         getScale() {
         return scale;
     }
@@ -107,7 +108,7 @@ public:
     }
 
 private:
-    sf::Vector2f position;  // Posicion del objeto.
-    sf::Vector2f rotation;  // Rotacion del objeto.
-    sf::Vector2f scale;     // Escala del objeto.
+    Vector2  position;  // Posicion del objeto.
+    Vector2  rotation;  // Rotacion del objeto.
+    Vector2  scale;     // Escala del objeto.
 };

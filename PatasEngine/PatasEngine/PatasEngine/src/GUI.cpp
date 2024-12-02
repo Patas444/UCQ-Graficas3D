@@ -137,9 +137,9 @@ void GUI::inspector(EngineUtilities::TSharedPointer<Actor> selectedActor) {
 
 	auto transform = selectedActor->getComponent<Transform>();
 	if (!transform.isNull()) {
-		sf::Vector2f position = transform->getPosition();
-		sf::Vector2f rotation = transform->getRotation(); // Cambié esto a vector para alinearlo con el formato
-		sf::Vector2f scale = transform->getScale();
+		Vector2 position = transform->getPosition();
+		Vector2 rotation = transform->getRotation(); // Cambié esto a vector para alinearlo con el formato
+		Vector2 scale = transform->getScale();
 
 		ImGui::Separator();
 
