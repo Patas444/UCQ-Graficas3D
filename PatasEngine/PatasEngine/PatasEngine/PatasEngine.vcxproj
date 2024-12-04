@@ -181,11 +181,15 @@
     <ClInclude Include="include\Memory\TUniquePtr.h" />
     <ClInclude Include="include\Memory\TWeakPointer.h" />
     <ClInclude Include="include\Prerequisites.h" />
+    <ClInclude Include="include\Quaternion.h" />
     <ClInclude Include="include\Services\NotificationSystem.h" />
+    <ClInclude Include="include\Services\ResourceManager.h" />
     <ClInclude Include="include\ShapeFactory.h" />
     <ClInclude Include="include\Texture.h" />
     <ClInclude Include="include\Transform.h" />
     <ClInclude Include="include\Vector2.h" />
+    <ClInclude Include="include\Vector3.h" />
+    <ClInclude Include="include\Vector4.h" />
     <ClInclude Include="include\Window.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
