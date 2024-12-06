@@ -4,6 +4,7 @@
 
 class
 	Texture : public Component {
+
 public:
 	Texture() = default;
 
@@ -16,7 +17,7 @@ public:
 		m_extension(extension),
 		Component(ComponentType::TEXTURE) {
 		if (!m_texture.loadFromFile(m_textureName + "." + m_extension)) {
-			std::cout << "Error de carga de textura: " << m_textureName << "." << m_extension << std::endl;
+			std::cout << "Error de carga de textura" << std::endl;
 		}
 	}
 
@@ -29,10 +30,15 @@ public:
 	}
 
 	// Implementación de los métodos virtuales puros
-	void update(float deltaTime) override {
-	// Lógica de actualización de la textura (si es necesario)
+	void 
+	update(float deltaTime) override {
 	}
 
+	
+	// Método puro para renderizar la textura.
+	void
+	render(Window window) override {
+	}
 private:
 	std::string m_textureName; // Nombre del archivo de la textura (sin extensión).
 	std::string m_extension; // Extensión del archivo de la textura.

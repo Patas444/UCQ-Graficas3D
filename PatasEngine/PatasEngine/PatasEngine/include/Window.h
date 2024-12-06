@@ -1,77 +1,73 @@
 ﻿#pragma once
-#include <SFML/Graphics.hpp>
+#include "Prerequisites.h"
 
-class 
+class
 Window {
 public:
-	Window() = default;
-	Window(int width, int height, const std::string& title);
-	~Window();
+  Window() = default;
+  Window(int width, int height, const std::string& title);
+  ~Window();
 
-	void
-	handleEvents();
+  // Procesa los eventos de la ventana y actualiza el estado de esta.
+  void
+  handleEvents();
 
-	// Limpia el contenido de la ventana con el color predeterminado.
-	void 
-	clear();
+  // Limpia el contenido de la ventana con el color predeterminado.
+  void
+  clear();
 
-	// Muestra el contenido de la ventana en la pantalla.
-	void 
-	display();
+  // Muestra el contenido de la ventana en la pantalla.
+  void
+  display();
 
-	// Verifica si la ventana sigue abierta.
-	bool 
-	isOpen() const;
+  // Verifica si la ventana sigue abierta.
+  bool
+  isOpen() const;
 
-	/**
-	 * @brief Dibuja un objeto que puede ser dibujado en la ventana.
-	 * drawable Referencia a un objeto SFML que puede ser dibujado.
-	 */
-	void 
-	draw(const sf::Drawable& drawable);
+ /**
+  * @brief Dibuja un objeto que puede ser dibujado en la ventana.
+  * drawable Referencia a un objeto SFML que puede ser dibujado.
+  */
+  void
+  draw(const sf::Drawable& drawable);
 
-	/**
-	 * @brief Obtiene el objeto interno SFML RenderWindow.
-	 * Un puntero al objeto interno SFML RenderWindow.
-	 */
-	sf::RenderWindow* 
-	getWindow();
+ /**
+  * @brief Obtiene el objeto interno SFML RenderWindow.
+  * Un puntero al objeto interno SFML RenderWindow.
+  */
+  sf::RenderWindow*
+  getWindow();
 
-	// Renderiza el contenido de la ventana en una textura.
-	void 
-	renderToTexture();
+  // Funcion de inicializacion.
+  void
+  init();
 
-	// Aplica un estilo personalizado a la ventana.
-	void
-	setCustomStyle();
+  // Funcion que se actualiza por frame.
+  void
+  update();
 
-	// Muestra el contenido de la ventana en una interfaz de ImGui.
-	void 
-	showInImGui();
+  // Funcion de renderizado.
+  void
+  render();
 
-	// Funcion de inicializacion
-	void
-	init();
+  // Libera los recursos utilizados por la ventana.
+  void
+  destroy();
 
-	// Funcion que se actualiza por frame
-	void
-	update();
+  // Permite renderizar los objetos gr�ficos a una textura.
+  void
+  renderToTexture();
 
-	// Funcion de renderizado
-	void
-	render();
-
-	// Libera los recursos utilizados por la ventana.
-	void
-	destroy();
+  // Muestra el contenido de la ventana en ImGui.
+  void
+  showInImGui();
 
 private:
-	sf::RenderWindow* m_window; // Puntero al objeto `RenderWindow` de SFML.
-	sf::View m_view; // Vista de la ventana para manejar la perspectiva de visualización.
+  sf::RenderWindow* m_window; // Puntero al objeto `RenderWindow` de SFML.
+  sf::View m_view; // Vista de la ventana para manejar la perspectiva de visualización.
 
 public:
-	sf::RenderTexture m_renderTexture; // Textura de renderizado para almacenamiento de gráficos.
-	sf::Time deltaTime; // Tiempo transcurrido entre frames.
-	sf::Clock clock; // Reloj para calcular el tiempo transcurrido entre frames.
-	
+  sf::RenderTexture m_renderTexture; // Textura para renderizar el contenido.
+  sf::Time deltaTime; // Tiempo transcurrido entre frames.
+  sf::Clock clock; // Reloj para calcular el tiempo transcurrido entre frames.
 };

@@ -8,9 +8,9 @@ class
 Entity {
 public:
 
-    // Destructor virtual.
-	virtual
-	~Entity() = default;
+  // Destructor virtual.
+  virtual
+  ~Entity() = default;
 
   /**
    * @brief Metodo virtual puro para actualizar la entidad.
@@ -32,9 +32,9 @@ public:
    * Puntero compartido al componente que se va a agregar.
    */
   template <typename T>
-  void addComponent(EngineUtilities::TSharedPointer<T> component) {
-    static_assert(std::is_base_of<Component, T>::value, "T must be derived from Component");
-    components.push_back(component.template dynamic_pointer_cast<Component>());
+  void addComponent(EngineUtilities::TSharedPointer <T> component) {
+      static_assert(std::is_base_of<Component, T>::value, "T must be derived from Component");
+      components.push_back(component.template dynamic_pointer_cast<Component>());
   }
 
 
@@ -45,20 +45,19 @@ public:
    */
   template<typename T>
   EngineUtilities::TSharedPointer<T>
-  getComponent() {
-    for (auto& component : components) {
-      EngineUtilities::TSharedPointer<T> specificComponent = component.template dynamic_pointer_cast<T>();
-      if (specificComponent) {
-        return specificComponent;
+      getComponent() {
+      for (auto& component : components) {
+          EngineUtilities::TSharedPointer<T> specificComponent = component.template dynamic_pointer_cast<T>();
+          if (specificComponent) {
+              return specificComponent;
+          }
       }
-    }
-    return EngineUtilities::TSharedPointer<T>();
+      return EngineUtilities::TSharedPointer<T>();
   }
 
 protected:
-	bool isActive;
+    bool isActive;
+    int id;
 
-	int id;
-
-	std::vector<EngineUtilities::TSharedPointer<Component>> components;
+    std::vector<EngineUtilities::TSharedPointer <Component>> components;
 };

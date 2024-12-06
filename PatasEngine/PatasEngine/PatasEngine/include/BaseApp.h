@@ -1,87 +1,67 @@
 #pragma once
 #include <SFML/Graphics.hpp>
-#include "Prerequisites.h"
-#include <Window.h>
+#include "Window.h"
 #include "ShapeFactory.h"
 #include "Actor.h"
 #include "GUI.h"
 #include "Services/NotificationSystem.h"
+#include "Services/ResourceManager.h"
 
 class
 BaseApp {
-
 public:
-	BaseApp() = default;
-	~BaseApp();
+  BaseApp() = default;
+  ~BaseApp();
 
-	// Funcion encargada de ejecutar la aplicacion en main
-	int
-	run();
+  // Funcion encargada de ejecutar la aplicacion en main.
+  int
+  run();
 
-	// Funcion de inicializacion
-	bool
-	initialize();
+  // Funcion de inicializacion.
+  bool
+  initialize();
 
-	// Funcion que se actualiza por frame
-	void
-	update();
+  // Funcion que se actualiza por frame.
+  void
+  update();
 
-	// Funcion de renderizado
-	void
-	render();
+  // Funcion de renderizado.
+  void
+  render();
 
-	// Libera los recursos utilizados por la aplicación.
-	void
-	cleanup();
+  // Libera los recursos utilizados por la aplicación.
+  void
+  cleanup();
 
-	/**
-	 * @brief Actualiza el movimiento del actor especificado.
-	 * Esta función gestiona el movimiento de un actor en función del
-	 * tiempo transcurrido.
-	 */
-	void
-	updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle);
-
-	/**
-	 * @brief Realiza la lógica de movimiento para el actor Circle.
-	 * Actualiza la posición del actor Circle en base al tiempo transcurrido
-	 * y la lógica definida.
-	 */
-	void
-	MovimientoCirculo(float deltaTime, EngineUtilities::TSharedPointer<Actor> Circle);
-
-	int
-	ActualPosition = 0; // Posicion actual de los waypoints
+  /**
+   * @brief Actualiza el movimiento del actor especificado.
+   * Esta función gestiona el movimiento de un actor en función del
+   * tiempo transcurrido.
+   */
+  void
+  updateMovement(float deltaTime, EngineUtilities::TSharedPointer<Actor> circle);
 
 private:
-	Window* m_window;
-	EngineUtilities::TSharedPointer<Actor> Triangle;
-	EngineUtilities::TSharedPointer<Actor> Circle;
-	EngineUtilities::TSharedPointer<Actor> Track;
-	std::vector< EngineUtilities::TSharedPointer<Actor>> m_actors;
+  sf::Clock clock;
+  sf::Time deltaTime;
 
-	// Seek Activity
-	int currentWaypoint = 0;
+  Window* m_window; // Puntero a la ventana donde se dibujan los elementos
+  EngineUtilities::TSharedPointer<Actor> Triangle;
+  EngineUtilities::TSharedPointer<Actor> Circle;
+  EngineUtilities::TSharedPointer<Actor> Track;
 
-   /**
-	* @brief Lista de waypoints utilizados para el movimiento de los actores 
-	* (En este caso del Circle/Mario :) ).
-	* Los actores seguirán estos puntos de referencia en el orden establecido.
-	*/
-	std::vector<Vector2> waypoints = {
-		{720.0f, 350.0f},
-		{720.0f, 260.0f},
-		{125.0f, 50.0f},
-		{70.0f, 120.0f},
-		{70.0f, 450.0f},
-		{400.0f, 350.0f},
-		{550.0f, 500.0f},
-		{650.0f, 550.0f},
-		{720.0f, 450.0f}
-	};
+  // Lista de actores en la escena
+  std::vector< EngineUtilities::TSharedPointer<Actor>> m_actors;
 
-	sf::Texture Mario; // Textura para el Actor Circle del personaje: Mario.
-	sf::Texture texture; // Textura usada para la pista/escenario.
+  //Array para la actividad de los puntos
+  Vector2 points[9];
+  int m_currentPoint = 0;
+  int m_currentActor = 0;
 
-	GUI m_GUI; // Interfaz gráfica de usuario para la aplicación.
+  // Texturas para los elementos en escena
+  sf::Texture texture;
+  sf::Texture Mario;
+
+  // Interfaz grafica de usuario
+  GUI m_GUI;
 };

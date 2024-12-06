@@ -1,24 +1,24 @@
 ﻿#include "GUI.h"
 #include "Window.h"
-#include "Actor.h"
-#include "transform.h"
-#include "Services/NotificationSystem.h"
+#include "imgui_internal.h"
 
 // Inicializa la GUI estableciendo el estilo de la interfaz.
 void
 GUI::init() {
-					
-	setupGUIStyle(); // Setup GUI Style
+
+    // Setup GUI Style
+    setupGUIStyle();
+
 }
 
 // Actualiza el estado de la GUI. 
-void GUI::update()
-{
+void
+GUI::update() {
 }
 
 // Renderiza la GUI.
-void GUI::render()
-{
+void
+GUI::render() {
 }
 
 // Libera recursos y destruye la GUI.
@@ -26,186 +26,156 @@ void
 GUI::destroy() {
 }
 
-// Configuraci�n de los colores basados en el estilo de Unreal Engine 5
-void
-GUI::setupGUIStyle() {
-	ImGuiStyle& style = ImGui::GetStyle();
-	ImVec4* colors = style.Colors;
+// Configura el estilo y los colores de la GUI mediante ImGUI
+void GUI::setupGUIStyle() {
+    ImGuiStyle& style = ImGui::GetStyle();
 
-	colors[ImGuiCol_WindowBg] = ImVec4(0.10f, 0.10f, 0.10f, 1.00f);  // Fondo de ventana
-	colors[ImGuiCol_Border] = ImVec4(0.40f, 0.40f, 0.40f, 0.50f);  // Bordes
-	colors[ImGuiCol_FrameBg] = ImVec4(0.16f, 0.16f, 0.16f, 1.00f);  // Fondo de cuadros
-	colors[ImGuiCol_FrameBgHovered] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);  // Hover sobre cuadros
-	colors[ImGuiCol_FrameBgActive] = ImVec4(0.34f, 0.34f, 0.34f, 1.00f);  // Cuadro activo
-	colors[ImGuiCol_TitleBg] = ImVec4(0.06f, 0.06f, 0.06f, 1.00f);  // Fondo del t�tulo
-	colors[ImGuiCol_TitleBgActive] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);  // T�tulo activo
-	colors[ImGuiCol_MenuBarBg] = ImVec4(0.14f, 0.14f, 0.14f, 1.00f);  // Fondo de la barra de men�
-	colors[ImGuiCol_Button] = ImVec4(0.20f, 0.20f, 0.20f, 1.00f);  // Bot�n inactivo
-	colors[ImGuiCol_ButtonHovered] = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);  // Bot�n hover
-	colors[ImGuiCol_ButtonActive] = ImVec4(0.40f, 0.40f, 0.40f, 1.00f);  // Bot�n activo
-	colors[ImGuiCol_Text] = ImVec4(0.85f, 0.85f, 0.85f, 1.00f);  // Texto principal
-	colors[ImGuiCol_TextDisabled] = ImVec4(0.55f, 0.55f, 0.55f, 1.00f);  // Texto deshabilitado
-	colors[ImGuiCol_Header] = ImVec4(0.24f, 0.24f, 0.24f, 1.00f);  // Encabezado
-	colors[ImGuiCol_HeaderHovered] = ImVec4(0.34f, 0.34f, 0.34f, 1.00f);  // Encabezado hover
-	colors[ImGuiCol_HeaderActive] = ImVec4(0.45f, 0.45f, 0.45f, 1.00f);  // Encabezado activo
-	colors[ImGuiCol_ScrollbarBg] = ImVec4(0.08f, 0.08f, 0.08f, 1.00f);  // Fondo scrollbar
-	colors[ImGuiCol_ScrollbarGrab] = ImVec4(0.30f, 0.30f, 0.30f, 1.00f);  // Scrollbar inactivo
-	colors[ImGuiCol_ScrollbarGrabHovered] = ImVec4(0.40f, 0.40f, 0.40f, 1.00f); // Scrollbar hover
-	colors[ImGuiCol_ScrollbarGrabActive] = ImVec4(0.50f, 0.50f, 0.50f, 1.00f); // Scrollbar activo
-	colors[ImGuiCol_CheckMark] = ImVec4(0.85f, 0.85f, 0.85f, 1.00f);  // Marca de check
+    // Configuración general de los bordes y tamaños
+    style.WindowRounding = 8.0f;
+    style.FrameRounding = 5.0f;
+    style.ScrollbarRounding = 12.0f;
+    style.GrabRounding = 5.0f;
+    style.WindowBorderSize = 1.0f;
+    style.FrameBorderSize = 1.0f;
+    style.PopupBorderSize = 1.0f;
+    style.WindowPadding = ImVec2(10, 10);
 
-	// Ajustes de estilo general
-	style.WindowRounding = 5.0f;   // Redondeo de bordes de ventanas
-	style.FrameRounding = 5.0f;   // Redondeo de bordes de cuadros
-	style.ScrollbarRounding = 5.0f;   // Redondeo de bordes de scrollbar
-	style.GrabRounding = 5.0f;   // Redondeo de bordes de botones de agarrar
-	style.FrameBorderSize = 1.0f;   // Grosor del borde de cuadros
-	style.WindowBorderSize = 1.0f;   // Grosor del borde de ventanas
-	style.PopupBorderSize = 1.0f;   // Grosor del borde de popups
+    // Colores de la interfaz estilo Mario Galaxy
+    ImVec4* colors = style.Colors;
+    colors[ImGuiCol_WindowBg] = ImVec4(0.0f, 0.0f, 0.1f, 1.0f);       // Fondo de ventana, azul oscuro
+    colors[ImGuiCol_TitleBg] = ImVec4(0.1f, 0.1f, 0.4f, 1.0f);        // Fondo del título, morado
+    colors[ImGuiCol_TitleBgActive] = ImVec4(0.2f, 0.2f, 0.6f, 1.0f);  // Fondo del título activo
+    colors[ImGuiCol_FrameBg] = ImVec4(0.0f, 0.0f, 0.2f, 1.0f);        // Fondo de cuadro, azul oscuro
+    colors[ImGuiCol_FrameBgHovered] = ImVec4(0.4f, 0.4f, 0.9f, 0.6f); // Fondo de cuadro al pasar el cursor
+    colors[ImGuiCol_FrameBgActive] = ImVec4(0.6f, 0.6f, 1.0f, 0.6f);  // Fondo de cuadro activo
+    colors[ImGuiCol_Button] = ImVec4(0.2f, 0.2f, 0.5f, 1.0f);         // Color de botón
+    colors[ImGuiCol_ButtonHovered] = ImVec4(0.3f, 0.3f, 0.7f, 1.0f);  // Color de botón al pasar el cursor
+    colors[ImGuiCol_ButtonActive] = ImVec4(0.4f, 0.4f, 0.8f, 1.0f);   // Color de botón activo
+    colors[ImGuiCol_Text] = ImVec4(0.9f, 0.9f, 0.9f, 1.0f);           // Color de texto blanco
+    colors[ImGuiCol_Border] = ImVec4(0.6f, 0.6f, 0.9f, 0.7f);         // Color de borde, azul claro
+    colors[ImGuiCol_CheckMark] = ImVec4(0.8f, 0.8f, 1.0f, 1.0f);      // Color de las marcas de selección
+    colors[ImGuiCol_SliderGrab] = ImVec4(0.6f, 0.6f, 1.0f, 1.0f);     // Color del deslizador
+    colors[ImGuiCol_SliderGrabActive] = ImVec4(0.8f, 0.8f, 1.0f, 1.0f); // Color del deslizador activo
 }
 
-/**
- * @brief Muestra una consola en la interfaz,
- * Permite visualizar los mensajes de error, advertencia e información.
- * También permite el filtrado de mensajes.
- */
 void
-GUI::console(const std::map<ConsolErrorType, std::vector<std::string>>& programMessages) {
-	ImGui::Begin("Console");
-	static ImGuiTextFilter filter; // Filtro de búsqueda
-	filter.Draw("Filter (\"error\", \"warning\", etc.)", 180.0f);
-	ImGui::Separator();
-	ImGui::BeginChild("ScrollingRegion", ImVec2(0, 0), false, ImGuiWindowFlags_HorizontalScrollbar);
-	for (const auto& pair : programMessages) {
-		// Establece color según el tipo de mensaje
-		ImVec4 color;
-		switch (pair.first) {
-		case ConsolErrorType::ERROR:
-			color = ImVec4(1.0f, 0.4f, 0.4f, 1.0f); // Rojo para errores
-			break;
-		case ConsolErrorType::WARNING:
-			color = ImVec4(1.0f, 1.0f, 0.4f, 1.0f); // Amarillo para advertencias
-			break;
-		case ConsolErrorType::NORMAL:
-		default:
-			color = ImVec4(0.8f, 0.8f, 0.8f, 1.0f); // Gris para mensajes de información
-			break;
-		}
-		for (const auto& message : pair.second) {
-			if (!filter.PassFilter(message.c_str())) continue; // Filtrar mensajes según el filtro de búsqueda
-			ImGui::PushStyleColor(ImGuiCol_Text, color);
-			ImGui::Text("[%d] %s", pair.first, message.c_str());
-			ImGui::PopStyleColor();
-		}
-	}
-	if (ImGui::GetScrollY() >= ImGui::GetScrollMaxY())
-		ImGui::SetScrollHereY(1.0f);
-	ImGui::EndChild();
-	ImGui::End();
+GUI::console(std::map<ConsolErrorType, std::string> programMessages) {
+    ImGui::Begin("Console");
+    for (const auto& pair : programMessages) {
+        ImGui::Text("Code: %d - Message: %s", pair.first, pair.second.c_str());
+    }
+    ImGui::End();
+
 }
 
 /**
  * @brief Muestra la jerarquía de actores en la interfaz y permite seleccionar un actor.
  * Permite visualizar la posicion y escala del actor seleccionado.
  */
-void GUI::hierarchy(const std::vector<EngineUtilities::TSharedPointer<Actor>>& actors, int& selectedActorID) {
-	ImGui::Begin("Hierarchy"); // Abrir la ventana de jerarquía
+void
+GUI::hierarchy(std::vector<EngineUtilities::TSharedPointer<Actor>>& actors) {
+    NotificationService& notifier = NotificationService::getInstance();
 
+    ImGui::Begin("Hierarchy");
 
-	for (int i = 0; i < actors.size(); ++i) {
-		if (!actors[i].isNull()) {
-			if (ImGui::Selectable(actors[i]->getName().c_str(), selectedActorID == i)) {
-				selectedActorID = i;  // Establecer actor seleccionado
-			}
-		}
-	}
+    for (int i = 0; i < actors.size(); ++i) {
+        auto& actor = actors[i];
+        if (actor.isNull()) continue;
 
-	ImGui::End(); // Cerrar la ventana de jerarquía
+        ImGui::PushID(i);
+        std::string displayName = std::to_string(i) + " - " + actor->getName();
+        if (ImGui::Selectable(displayName.c_str(), selectedActor == actor)) {
+            selectedActor = actor;
+        }
+        ImGui::PopID();
+    }
+
+    ImGui::Separator();
+    ImGui::Spacing();
+
+    if (ImGui::Button("Create Circle")) {
+        auto circleAct = EngineUtilities::MakeShared<Actor>("Circle");
+        if (!circleAct.isNull()) {
+            circleAct->getComponent<ShapeFactory>()->createShape(ShapeType::CIRCLE);
+
+            circleAct->getComponent<Transform>()->setTransform(Vector2(100.0f, 100.0f),
+                Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f));
+
+            actors.push_back(circleAct);
+
+            notifier.addMessage(ConsolErrorType::NORMAL, "Actor '" + circleAct->getName() + "' created successfully.");
+        }
+    }
+
+    if (ImGui::Button("Create Rectangle")) {
+        auto ractangleAct = EngineUtilities::MakeShared<Actor>("Rectangle");
+        if (!ractangleAct.isNull()) {
+            ractangleAct->getComponent<ShapeFactory>()->createShape(ShapeType::RECTANGLE);
+
+            ractangleAct->getComponent<Transform>()->setTransform(Vector2(200.0f, 150.0f),
+                Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f));
+            actors.push_back(ractangleAct);
+
+            notifier.addMessage(ConsolErrorType::NORMAL, "Actor '" + ractangleAct->getName() + "' created successfully.");
+        }
+    }
+
+    if (ImGui::Button("Create Triangle")) {
+        auto triangleAct = EngineUtilities::MakeShared<Actor>("Triangle");
+        if (!triangleAct.isNull()) {
+            triangleAct->getComponent<ShapeFactory>()->createShape(ShapeType::TRIANGLE);
+
+            triangleAct->getComponent<Transform>()->setTransform(Vector2(150.0f, 200.0f),
+                Vector2(0.0f, 0.0f), Vector2(1.0f, 1.0f));
+            actors.push_back(triangleAct);
+
+            notifier.addMessage(ConsolErrorType::NORMAL, "Actor '" + triangleAct->getName() + "' created successfully.");
+        }
+    }
+
+    ImGui::End();
 }
 
 /**
  * @brief Muestra la ventana del Inspector.
  * Permite visualizar y modificación de atributos del actor actualmente seleccionado.
  */
-void GUI::inspector(EngineUtilities::TSharedPointer<Actor> selectedActor) {
-	if (selectedActor.isNull()) return;
+void
+GUI::inspector() {
 
-	ImGui::Begin("Inspector"); // Abrir la ventana del Inspector
+    if (selectedActor.isNull()) {
+        return;
+    }
 
-	// Mostrar el nombre del actor
-	ImGui::Text("Actor: %s", selectedActor->getName().c_str());
+    ImGui::Begin("Inspector");
 
-	auto transform = selectedActor->getComponent<Transform>();
-	if (!transform.isNull()) {
-		Vector2 position = transform->getPosition();
-		Vector2 rotation = transform->getRotation(); // Cambié esto a vector para alinearlo con el formato
-		Vector2 scale = transform->getScale();
+    // Muestra el nombre del actor
+    char objectName[128];
+    std::string name = selectedActor->getName();
 
-		ImGui::Separator();
+    if (name.size() < sizeof(objectName)) {
+        std::copy(name.begin(), name.end(), objectName);
+        objectName[name.size()] = '\0'; // Termina con null
+    }
 
-		// Sección de posición
-		ImGui::Text("Position");
-		ImGui::PushItemWidth(50.0f);
+    // Campo para editar el nombre del objeto
+    if (ImGui::InputText("Name", objectName, sizeof(objectName))) {
+        selectedActor->setName(std::string(objectName));
+    }
 
-		// Eje X (rojo)
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.1f, 0.1f, 1.0f));
-		ImGui::Text("X");
-		ImGui::PopStyleColor();
-		ImGui::SameLine();
-		ImGui::InputFloat("##PosX", &position.x);
+    // Obtiene el componente Transform del actor
+    auto transform = selectedActor->getComponent<Transform>();
+    if (!transform.isNull()) {
 
-		// Eje Y (verde)
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));
-		ImGui::Text("Y");
-		ImGui::PopStyleColor();
-		ImGui::SameLine();
-		ImGui::InputFloat("##PosY", &position.y);
+        float* m_position = new float[2];
+        float* m_rotation = new float[2];
+        float* m_scale = new float[2];
+        vec2Control("Position", selectedActor->getComponent<Transform>()->getPosData());
+        vec2Control("Rotation", selectedActor->getComponent<Transform>()->getRotData());
+        vec2Control("Scale", selectedActor->getComponent<Transform>()->getSclData());
+    }
 
-		ImGui::Separator();
-
-		// Sección de rotación
-		ImGui::Text("Rotation");
-
-		// Eje X (rojo)
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.1f, 0.1f, 1.0f));
-		ImGui::Text("X");
-		ImGui::PopStyleColor();
-		ImGui::SameLine();
-		ImGui::InputFloat("##RotX", &rotation.x);
-
-		// Eje Y (verde)
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));
-		ImGui::Text("Y");
-		ImGui::PopStyleColor();
-		ImGui::SameLine();
-		ImGui::InputFloat("##RotY", &rotation.y);
-
-		ImGui::Separator();
-
-		// Sección de escala
-		ImGui::Text("Scale");
-
-		// Eje X (rojo)
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.8f, 0.1f, 0.1f, 1.0f));
-		ImGui::Text("X");
-		ImGui::PopStyleColor();
-		ImGui::SameLine();
-		ImGui::InputFloat("##ScaleX", &scale.x);
-
-		// Eje Y (verde)
-		ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(0.1f, 0.8f, 0.1f, 1.0f));
-		ImGui::Text("Y");
-		ImGui::PopStyleColor();
-		ImGui::SameLine();
-		ImGui::InputFloat("##ScaleY", &scale.y);
-
-		// Aplicar cambios a la transformación
-		transform->setPosition(position);
-		transform->setRotation(rotation);
-		transform->setScale(scale);
-	}
-
-	ImGui::End(); // Cerrar la ventana del Inspector
+    ImGui::End();
 }
 
 /**
@@ -213,50 +183,52 @@ void GUI::inspector(EngineUtilities::TSharedPointer<Actor> selectedActor) {
  * Permite crear un actor con cualquiera de las siguintes formas(Cuadrado/Circulo/Triangulo)
  * y darle un nombre.
  */
-void GUI::actorCreationMenu(std::vector<EngineUtilities::TSharedPointer<Actor>>& actors) {
-	static char actorName[128] = "";  // Para almacenar el nombre del actor temporalmente
-	static int selectedShape = 0;     // 0: Rectángulo, 1: Círculo, 2: Triángulo
+void
+GUI::vec2Control(const std::string& label, float* values, float resetValue, float columnWidth) {
+    ImGuiIO& io = ImGui::GetIO();
+    auto boldFont = io.Fonts->Fonts[0];
 
-	ImGui::Begin("Actor Creation");
+    ImGui::PushID(label.c_str());
 
-	ImGui::InputText("Actor Name", actorName, IM_ARRAYSIZE(actorName));
-	ImGui::Combo("Shape", &selectedShape, "Rectangle\0Circle\0Triangle\0");
+    ImGui::Columns(2);
+    ImGui::SetColumnWidth(0, columnWidth);
+    ImGui::Text(label.c_str());
+    ImGui::NextColumn();
 
-	if (ImGui::Button("Create Actor")) {
-		std::string name = actorName;
+    ImGui::PushMultiItemsWidths(3, ImGui::CalcItemWidth());
+    ImGui::PushStyleVar(ImGuiStyleVar_ItemSpacing, ImVec2{ 0, 0 });
 
-		if (name.empty()) {
-			// Enviar mensaje de error si el nombre está vacío
-			NotificationService& notifier = NotificationService::getInstance();
-			notifier.addMessage(ConsolErrorType::ERROR, "Actor creation failed: Actor name cannot be empty.");
-		}
-		else {
-			// Crear el actor con el nombre y forma seleccionada
-			EngineUtilities::TSharedPointer<Actor> newActor = EngineUtilities::MakeShared<Actor>(name);
+    float lineHeight = GImGui->Font->FontSize + GImGui->Style.FramePadding.y * 2.0f;
+    ImVec2 buttonSize = { lineHeight + 3.0f, lineHeight };
 
-			switch (selectedShape) {
-			case 0:
-				newActor->getComponent<ShapeFactory>()->createShape(ShapeType::RECTANGLE);
-				break;
-			case 1:
-				newActor->getComponent<ShapeFactory>()->createShape(ShapeType::CIRCLE);
-				break;
-			case 2:
-				newActor->getComponent<ShapeFactory>()->createShape(ShapeType::TRIANGLE);
-				break;
-			}
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.9f, 0.2f, 0.2f, 1.0f });
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.8f, 0.1f, 0.15f, 1.0f });
+    ImGui::PushFont(boldFont);
+    if (ImGui::Button("X", buttonSize)) values[0] = resetValue;
+    ImGui::PopFont();
+    ImGui::PopStyleColor(3);
 
-			// Agregar el nuevo actor al vector de actores
-			actors.push_back(newActor);
+    ImGui::SameLine();
+    ImGui::DragFloat("##X", &values[0], 0.1f, 0.0f, 0.0f, "%.2f");
+    ImGui::PopItemWidth();
+    ImGui::SameLine();
 
-			// Notificar éxito en la creación
-			NotificationService& notifier = NotificationService::getInstance();
-			notifier.addMessage(ConsolErrorType::NORMAL, "Actor '" + name + "' created successfully.");
+    ImGui::PushStyleColor(ImGuiCol_Button, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+    ImGui::PushStyleColor(ImGuiCol_ButtonHovered, ImVec4{ 0.3f, 0.8f, 0.3f, 1.0f });
+    ImGui::PushStyleColor(ImGuiCol_ButtonActive, ImVec4{ 0.2f, 0.7f, 0.2f, 1.0f });
+    ImGui::PushFont(boldFont);
+    if (ImGui::Button("Y", buttonSize)) values[1] = resetValue;
+    ImGui::PopFont();
+    ImGui::PopStyleColor(3);
 
-			// Limpiar el campo de nombre para el próximo actor
-			actorName[0] = '\0';
-		}
-	}
-	ImGui::End();
+    ImGui::SameLine();
+    ImGui::DragFloat("##Y", &values[1], 0.1f, 0.0f, 0.0f, "%.2f");
+    ImGui::PopItemWidth();
+    ImGui::SameLine();
 
+    ImGui::PopStyleVar();
+    ImGui::Columns(1);
+
+    ImGui::PopID();
 }
